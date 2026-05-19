@@ -1,61 +1,128 @@
 # LLM-Based Graph Foundation Model
 
-This project demonstrates how to use Large Language Models as Graph Foundation Models through Natural Language Conversion.
+A framework demonstrating how Large Language Models can serve as Graph Foundation Models through natural language conversion of graph structures.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.8+">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License">
+</p>
+
+## Overview
+
+This project transforms graph structures (citation networks) into natural language narratives, enabling LLM-based node classification without traditional graph neural networks. The approach converts graph topology and node features into text prompts that LLMs can process.
 
 ## Features
 
-- **Cora citation graph** - Loads the Cora dataset for citation network analysis
-- **Graph-to-text conversion** - Transforms graph structures into natural language narratives
-- **Zero-shot prompting** - Direct classification without examples
-- **Few-shot prompting** - Classification with example demonstrations
-- **LLM-based node classification** - Uses Grok API for paper category prediction
-- **Streamlit deployment** - Interactive web interface
+| Feature | Description |
+|---------|-------------|
+| **Graph-to-Text Conversion** | Transforms citation graph neighbors into fluent narrative |
+| **Zero-Shot Classification** | Direct prediction without training examples |
+| **Few-Shot Learning** | Leverages examples for improved accuracy |
+| **Streamlit Interface** | Interactive web UI for real-time predictions |
+| **Cora Dataset Support** | Built-in loading of citation network benchmark |
 
 ## Installation
 
 ```bash
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+# Clone the repository
+git clone https://github.com/kesavadatta2410/LLM-Based-GFM.git
+cd LLM-Based-GFM
 
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate  # Windows
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ## Configuration
 
-Create a `.env` file with your API key:
+Create a `.env` file in the project root:
 
-```
+```env
 GROK_API_KEY=your_api_key_here
 ```
 
 ## Usage
 
+### Web Interface
+
 ```bash
 streamlit run app/app.py
+```
+
+Navigate to `http://localhost:8501` and enter a node ID to classify.
+
+### Python API
+
+```python
+from src.pipeline import run_pipeline
+
+result = run_pipeline(node_id=25, few_shot=True)
+print(result["prediction"])
+```
+
+## Architecture
+
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+│  Cora Data  │────▶│  Graph Build  │────▶│  Text Convert   │
+└─────────────┘     └──────────────┘     └─────────────────┘
+                                                │
+                                                ▼
+┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+│  Prompt     │◀────│  Templates   │◀────│  Graph Text     │
+│  Builder    │     │ (few/zero)   │     │ (narrative)     │
+└─────────────┘     └──────────────┘     └─────────────────┘
+      │
+      ▼
+┌─────────────┐
+│    LLM      │
+│ (Grok API)  │
+└─────────────┘
+      │
+      ▼
+┌─────────────┐
+│ Prediction  │
+│ (category)  │
+└─────────────┘
 ```
 
 ## Project Structure
 
 ```
 ├── app/
-│   └── app.py              # Streamlit web interface
-├── data/                   # Cora dataset (auto-downloaded)
+│   ├── app.py           # Streamlit web interface
+│   └── ui_helpers.py    # UI utility functions
+├── data/                # Cora dataset (auto-downloaded)
 ├── prompts/
-│   ├── few_shot.txt        # Few-shot prompt template
-│   └── zero_shot.txt       # Zero-shot prompt template
+│   ├── few_shot.txt     # Few-shot prompt template
+│   └── zero_shot.txt    # Zero-shot prompt template
 ├── src/
-│   ├── config.py           # Configuration and environment variables
-│   ├── dataset_loader.py   # Cora dataset loading
-│   ├── graph_builder.py    # Graph construction
-│   ├── llm_client.py       # LLM API client
-│   ├── pipeline.py         # Main pipeline orchestration
-│   ├── prompt_builder.py   # Prompt generation
-│   ├── text_converter.py   # Graph-to-text conversion
-│   └── utils.py            # Utility functions
+│   ├── config.py        # Environment configuration
+│   ├── dataset_loader.py # Cora dataset loader
+│   ├── graph_builder.py # NetworkX graph construction
+│   ├── llm_client.py    # OpenAI-compatible client
+│   ├── pipeline.py      # Main orchestration pipeline
+│   ├── prompt_builder.py # Prompt template processing
+│   ├── text_converter.py # Graph-to-narrative conversion
+│   └── utils.py         # Helper functions
+├── main.py              # CLI entry point
+├── requirements.txt     # Python dependencies
 └── README.md
 ```
 
+## Pipeline Overview
+
+1. **Load Dataset**: Download Cora citation network via PyTorch Geometric
+2. **Build Graph**: Convert edge index to NetworkX graph structure
+3. **Generate Texts**: Create synthetic paper content for each node
+4. **Convert to Narrative**: Transform node + neighbors into text format
+5. **Query LLM**: Send prompt through Grok API for classification
+6. **Return Prediction**: Extract predicted academic category
+
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
