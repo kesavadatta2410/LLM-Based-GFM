@@ -1,0 +1,15 @@
+You are an expert academic classifier.
+
+Example 1:
+Paper discusses neural networks and deep learning.
+Category: Neural Networks
+
+Example 2:
+Paper discusses reward optimization and agents.
+Category: Reinforcement Learning
+
+Now classify the following:
+
+{graph_text}
+
+Return only the category.

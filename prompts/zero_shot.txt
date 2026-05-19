@@ -1,0 +1,17 @@
+You are an expert academic paper classifier.
+
+Below is a graph-based citation narrative.
+
+{graph_text}
+
+Predict the academic category of the target paper.
+
+Possible Classes:
+- Neural Networks
+- Reinforcement Learning
+- Genetic Algorithms
+- Rule Learning
+- Probabilistic Methods
+- Theory
+
+Only return the category name.
