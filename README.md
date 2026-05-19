@@ -42,7 +42,7 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-GROK_API_KEY=your_api_key_here
+GOOGLE_API_KEY=your_api_key_here
 ```
 
 ## Usage
@@ -80,7 +80,7 @@ print(result["prediction"])
       ▼
 ┌─────────────┐
 │    LLM      │
-│ (Grok API)  │
+│ (Gemini API) │
 └─────────────┘
       │
       ▼
@@ -104,7 +104,7 @@ print(result["prediction"])
 │   ├── config.py        # Environment configuration
 │   ├── dataset_loader.py # Cora dataset loader
 │   ├── graph_builder.py # NetworkX graph construction
-│   ├── llm_client.py    # OpenAI-compatible client
+│   ├── llm_client.py    # Google Generative AI client
 │   ├── pipeline.py      # Main orchestration pipeline
 │   ├── prompt_builder.py # Prompt template processing
 │   ├── text_converter.py # Graph-to-narrative conversion
@@ -120,7 +120,7 @@ print(result["prediction"])
 2. **Build Graph**: Convert edge index to NetworkX graph structure
 3. **Generate Texts**: Create synthetic paper content for each node
 4. **Convert to Narrative**: Transform node + neighbors into text format
-5. **Query LLM**: Send prompt through Grok API for classification
+5. **Query LLM**: Send prompt through Google Generative AI API for classification
 6. **Return Prediction**: Extract predicted academic category
 
 ## License

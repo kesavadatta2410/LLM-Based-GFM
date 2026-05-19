@@ -3,12 +3,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GROK_API_KEY = os.getenv(
-    "GROK_API_KEY"
+GOOGLE_API_KEY = os.getenv(
+    "GOOGLE_API_KEY"
 )
 
-MODEL_NAME = "grok-3-mini"
-
-BASE_URL = "https://api.x.ai/v1"
+MODEL_NAME = "gemini-2.0-flash"
 
 MAX_NEIGHBORS = 5
