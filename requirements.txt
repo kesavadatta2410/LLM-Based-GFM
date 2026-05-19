@@ -1,6 +1,6 @@
-torch
-torch-geometric
-networkx
-python-dotenv
-openai
-streamlit
+﻿torch==2.12.0
+torch-geometric==2.7.0
+networkx==3.6.1
+python-dotenv==1.2.2
+openai==2.37.0
+streamlit==1.57.0
